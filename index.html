@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Giới thiệu bản thân</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: url('bg.jpg') no-repeat center center/cover;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .led-overlay::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(0,255,255,0.3), transparent);
+            animation: moveLight 4s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes moveLight {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .profile-card {
+            position: relative;
+            background: linear-gradient(45deg, #00f0ff, #0066ff, #00ffcc);
+            background-size: 600% 600%;
+            animation: gradientShift 8s ease infinite;
+            padding: 50px;
+            border-radius: 30px;
+            width: 600px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(0,255,255,0.4);
+            z-index: 2;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .profile-img img {
+            width: 150px;
+            border-radius: 50%;
+            border: 4px solid #fff;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .profile-img img:hover {
+            transform: scale(1.1);
+        }
+
+        .profile-info h2 {
+            margin: 20px 0 10px;
+            font-size: 28px;
+        }
+
+        .profile-info p {
+            font-size: 16px;
+            color: #e0e0e0;
+            margin-bottom: 20px;
+        }
+
+        .social-icons {
+            margin: 15px 0;
+        }
+
+        .social-icons img {
+            width: 35px;
+            margin: 0 10px;
+            transition: transform 0.3s;
+        }
+
+        .social-icons img:hover {
+            transform: scale(1.3);
+        }
+
+        .contact-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 28px;
+            background: #fff;
+            color: #000;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .contact-btn:hover {
+            background: #00f0ff;
+            color: #000;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .overlay img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(0,255,255,0.4);
+            animation: zoomIn 0.3s ease;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- LED ánh sáng chạy ngang -->
+<div class="led-overlay"></div>
+
+<!-- Card thông tin cá nhân -->
+<div class="profile-card">
+    <div class="profile-img">
+        <img src="avatar.png" alt="Avatar" id="avatar">
+    </div>
+    <div class="profile-info">
+        <h2>CHU ĐÌNH BÌNH</h2>
+        <p></p>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/binh.chu.434869?locale=vi_VN"><img src="facebook.png" alt="Facebook"></a>
+            <a href="#"><img src="instagram.png" alt="Instagram"></a>
+            <a href="#"><img src="zalo.png" alt="Zalo"></a>
+        </div>
+        <a href="VietQR.html" class="contact-btn">Liên hệ</a>
+    </div>
+</div>
+
+<!-- Phóng to avatar -->
+<div class="overlay" id="overlay">
+    <img src="avatar.png" alt="Phóng to ảnh">
+</div>
+
+<script>
+    const avatar = document.getElementById("avatar");
+    const overlay = document.getElementById("overlay");
+
+    avatar.addEventListener("click", () => overlay.style.display = "flex");
+    overlay.addEventListener("click", () => overlay.style.display = "none");
+</script>
+</body>
+</html>

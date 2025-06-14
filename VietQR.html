@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Chuyển khoản ngân hàng</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+    .qr-box {
+      margin-top: 20px;
+    }
+    img {
+      border: 2px solid #ccc;
+      border-radius: 10px;
+    }
+    input {
+      padding: 10px;
+      width: 200px;
+      font-size: 16px;
+      margin-bottom: 20px;
+      text-align: center; /* ✅ Căn giữa văn bản trong ô input */
+    }
+  </style>
+</head>
+<body>
+<h2>(❁´◡`❁)Thông tin chuyển khoản (❁´◡`❁)</h2>
+
+<p><strong>Ngân hàng:</strong> MB</p>
+<p><strong>Số tài khoản:</strong> 0389415404</p>
+<p><strong>Tên người nhận:</strong> CHU DINH BINH</p>
+
+<label for="amountInput"><strong>Nhập số tiền (VND):</strong></label><br>
+<input type="text" id="amountInput" placeholder="VD: 1000000" value="0"><br>
+
+<p><strong>Nội dung:</strong> CHUYỂN TIỀN TỚI BINHCHUDZTOP1SERVER</p>
+
+<div class="qr-box">
+  <h3>Quét mã QR để chuyển khoản:</h3>
+  <img id="qr-image" width="400" height="400" alt="QR chuyển khoản">
+</div>
+
+<script>
+  const bankCode = 'MB';
+  const accountNumber = '0389415404';
+  const accountName = 'CHU DINH BINH';
+  const addInfo = 'BẠN ĐANG CHUYỂN TIỀN TỚI TÀI KHOẢN CỦA BINHCHUDZTOP1SERVER';
+
+  const amountInput = document.getElementById('amountInput');
+  const qrImage = document.getElementById('qr-image');
+
+  function formatVND(number) {
+    return number.toLocaleString('vi-VN');
+  }
+
+  function getRawAmount(value) {
+    return parseInt(value.replace(/\D/g, '')) || 0;
+  }
+
+  function updateQR() {
+    const rawAmount = getRawAmount(amountInput.value);
+    const qrUrl = `https://img.vietqr.io/image/${bankCode}-${accountNumber}-compact2.png?amount=${rawAmount}&addInfo=${encodeURIComponent(addInfo)}&accountName=${encodeURIComponent(accountName)}&amountEditable=false`;
+    qrImage.src = qrUrl;
+  }
+
+
+  amountInput.addEventListener('input', () => {
+    const raw = getRawAmount(amountInput.value);
+    amountInput.value = formatVND(raw);
+    updateQR();
+    setTimeout(() => {
+      amountInput.setSelectionRange(amountInput.value.length, amountInput.value.length);
+    }, 0);
+  });
+
+  amountInput.value = formatVND(getRawAmount(amountInput.value));
+  updateQR();
+</script>
+</body>
+</html>
